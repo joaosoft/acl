@@ -43,59 +43,57 @@ A simple acl implementation.
     ]
     ```
 
-* **Get category resources:** 
+* **Get category pages:** 
 
     Method: GET
     
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/resources
+    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/pages
     
     Response: 
     ```
     [
         {
-            "name": "Read Access Home",
-            "key": "access.home.read",
-            "type": "app",
-            "description": "read access to home page",
+            "name": "Banner Page",
+            "key": "banner",
+            "description": "site banner page",
             "active": true,
-            "created_at": "2019-03-28T20:03:29.061Z",
-            "updated_at": "2019-03-28T20:04:12.06Z"
+            "created_at": "2019-03-28T20:01:23.161Z",
+            "updated_at": "2019-03-28T20:01:23.161Z"
         },
         {
-            "name": "Write Access Home",
-            "key": "access.home.write",
-            "type": "app",
-            "description": "write access to home page",
+            "name": "Promotion Page",
+            "key": "promotion",
+            "description": "site promotion page",
             "active": true,
-            "created_at": "2019-03-28T20:04:12.054Z",
-            "updated_at": "2019-03-28T20:04:12.054Z"
-        },
-        {
-            "name": "Read Business Dummy",
-            "key": "business.dummy.read",
-            "type": "business",
-            "description": "read business dummy",
-            "active": true,
-            "created_at": "2019-03-28T20:03:29.061Z",
-            "updated_at": "2019-03-28T20:04:12.06Z"
-        },
-        {
-            "name": "Write Business Dummy",
-            "key": "business.dummy.write",
-            "type": "business",
-            "description": "write business dummy",
-            "active": true,
-            "created_at": "2019-03-28T20:04:12.054Z",
-            "updated_at": "2019-03-28T20:04:12.054Z"
+            "created_at": "2019-03-28T20:01:23.161Z",
+            "updated_at": "2019-03-28T20:01:23.161Z"
         }
     ]
     ```
 
-* **Get category resources of a type:** 
+* **Get category page:** 
 
     Method: GET
     
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/resources/types/app
+    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion
+    
+    Response: 
+    ```
+    {
+        "name": "Promotion Page",
+        "key": "promotion",
+        "description": "site promotion page",
+        "active": true,
+        "created_at": "2019-03-28T20:01:23.161Z",
+        "updated_at": "2019-03-28T20:01:23.161Z"
+    }
+    ```
+    
+* **Get page resources of a type:** 
+
+    Method: GET
+    
+    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion/types/app
     
     Response: 
     ```
@@ -103,7 +101,9 @@ A simple acl implementation.
         {
             "name": "Read Access Home",
             "key": "access.home.read",
-            "type": "app",
+            "resource_category_key": "home",
+            "resource_page_key": "promotion",
+            "resource_type_key": "app",
             "description": "read access to home page",
             "active": true,
             "created_at": "2019-03-28T20:03:29.061Z",
@@ -112,7 +112,9 @@ A simple acl implementation.
         {
             "name": "Write Access Home",
             "key": "access.home.write",
-            "type": "app",
+            "resource_category_key": "home",
+            "resource_page_key": "promotion",
+            "resource_type_key": "app",
             "description": "write access to home page",
             "active": true,
             "created_at": "2019-03-28T20:04:12.054Z",
