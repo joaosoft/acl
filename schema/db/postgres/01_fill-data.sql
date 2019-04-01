@@ -17,20 +17,26 @@ INSERT INTO "acl"."resource_category" (id_resource_category, fk_role, "name", "k
 
 -- resource_page
 INSERT INTO "acl"."resource_page" (id_resource_page, fk_role, fk_resource_category, "name", "key", description, fk_parent_resource_page, active, created_at, updated_at) VALUES
-('1', '1', '1', 'Home Page', 'home', 'site home page', NULL, true, '2019-03-28 20:01:23.161', '2019-03-28 20:01:23.161'),
-('2', '1', '2', 'Settings Page', 'settings', 'site settings page', NULL, true, '2019-03-28 20:01:50.697', '2019-03-28 20:01:50.697');
+('1', '1', '1', 'Promotion Page', 'promotion', 'site promotion page', NULL, true, '2019-03-28 20:01:23.161', '2019-03-28 20:01:23.161'),
+('2', '1', '1', 'Banner Page', 'banner', 'site banner page', NULL, true, '2019-03-28 20:01:23.161', '2019-03-28 20:01:23.161'),
+('3', '1', '2', 'Billing Page', 'billing', 'site billing page', NULL, true, '2019-03-28 20:01:50.697', '2019-03-28 20:01:50.697'),
+('4', '1', '2', 'Profile Page', 'profile', 'site profile page', NULL, true, '2019-03-28 20:01:50.697', '2019-03-28 20:01:50.697');
 
 -- resource_type
 INSERT INTO "acl"."resource_type" (id_resource_type, "name", "key", description, active, created_at, updated_at) VALUES
 ('1', 'Application Resource', 'app', 'application resource', true, '2019-03-28 20:03:29.061', '2019-03-28 20:04:12.060'),
-('2', 'Business Resource', 'business', 'busioness resource', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054');
+('2', 'Business Resource', 'business', 'business resource', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054');
 
 -- resource
 INSERT INTO "acl"."resource" (id_resource, fk_role, fk_resource_type, fk_resource_page, "name", "key", description, active, created_at, updated_at) VALUES
 ('1', '1', '1', '1', 'Read Access Home', 'access.home.read', 'read access to home page', true, '2019-03-28 20:03:29.061', '2019-03-28 20:04:12.060'),
 ('2', '1', '1', '1', 'Write Access Home', 'access.home.write', 'write access to home page', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054'),
-('3', '1', '2', '2', 'Read Business Dummy', 'business.dummy.read', 'read business dummy', true, '2019-03-28 20:03:29.061', '2019-03-28 20:04:12.060'),
-('4', '1', '2', '2', 'Write Business Dummy', 'business.dummy.write', 'write business dummy', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054');
+('3', '1', '1', '2', 'Read Access Banner', 'access.banner.read', 'read access to banner page', true, '2019-03-28 20:03:29.061', '2019-03-28 20:04:12.060'),
+('4', '1', '1', '2', 'Write Access Banner', 'access.banner.write', 'write access to banner page', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054'),
+('5', '1', '2', '3', 'Read Business Billing', 'business.billing.read', 'read business billing', true, '2019-03-28 20:03:29.061', '2019-03-28 20:04:12.060'),
+('6', '1', '2', '3', 'Write Business Billing', 'business.billing.write', 'write business billing', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054'),
+('7', '1', '1', '2', 'Read Access Profile', 'access.profile.read', 'read access to profile page', true, '2019-03-28 20:03:29.061', '2019-03-28 20:04:12.060'),
+('8', '1', '1', '2', 'Write Access Profile', 'access.profile.write', 'write access to profile page', true, '2019-03-28 20:04:12.054', '2019-03-28 20:04:12.054');
 
 
 
