@@ -1,9 +1,11 @@
 package acl
 
 type IStorageDB interface {
-	GetCategories(domainKey, roleKey string) (Categories, error)
-	GetResources(domainKey, roleKey, categoryKey string) (Resources, error)
-	GetResourcesByType(domainKey, roleKey, categoryKey, resourceTypeKey string) (Resources, error)
+	GetResourceCategories(domainKey, roleKey string) (Categories, error)
+	GetResourceCategoryPages(domainKey, roleKey, resourceCategoryKey string) (Pages, error)
+	GetResourceCategoryPage(domainKey, roleKey, resourceCategoryKey, resourcePageKey string) (*Page, error)
+	GetPageResources(domainKey, roleKey, resourceCategoryKey string, resourcePageKey string) (Resources, error)
+	GetPageResourcesByType(domainKey, roleKey, resourceCategoryKey, resourcePageKey string, resourceTypeKey string) (Resources, error)
 	CheckEndpointAccess(domainKey, roleKey, resourceTypeKey, method, endpoint string) (isAllowed bool, err error)
 }
 
@@ -19,10 +21,10 @@ func NewInteractor(config *AclConfig, storageDB IStorageDB) *Interactor {
 	}
 }
 
-func (i *Interactor) GetCategories(request *GetCategoriesRequest) (Categories, error) {
-	log.WithFields(map[string]interface{}{"method": "GetCategories"})
+func (i *Interactor) GetResourceCategories(request *GetResourceCategoriesRequest) (Categories, error) {
+	log.WithFields(map[string]interface{}{"method": "GetResourceCategories"})
 	log.Infof("getting categories [domain key: %s, role key: %s]", request.DomainKey, request.RoleKey)
-	categories, err := i.storage.GetCategories(request.DomainKey, request.RoleKey)
+	categories, err := i.storage.GetResourceCategories(request.DomainKey, request.RoleKey)
 	if err != nil {
 		log.WithFields(map[string]interface{}{"error": err.Error()}).
 			Errorf("error getting categories [domain key: %s, role key: %s, error: %s]", request.DomainKey, request.RoleKey, err).ToError()
@@ -32,26 +34,52 @@ func (i *Interactor) GetCategories(request *GetCategoriesRequest) (Categories, e
 	return categories, nil
 }
 
-func (i *Interactor) GetResources(request *GetResourcesRequest) (Resources, error) {
-	log.WithFields(map[string]interface{}{"method": "GetResources"})
-	log.Infof("getting resources [domain key: %s, role key: %s, category key: %s]", request.DomainKey, request.RoleKey, request.CategoryKey)
-	resources, err := i.storage.GetResources(request.DomainKey, request.RoleKey, request.CategoryKey)
+func (i *Interactor) GetResourceCategoryPages(request *GetResourceCategoryPagesRequest) (Pages, error) {
+	log.WithFields(map[string]interface{}{"method": "GetResourceCategoryPages"})
+	log.Infof("getting category pages [domain key: %s, role key: %s, resource category key: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey)
+	pages, err := i.storage.GetResourceCategoryPages(request.DomainKey, request.RoleKey, request.ResourceCategoryKey)
 	if err != nil {
 		log.WithFields(map[string]interface{}{"error": err.Error()}).
-			Errorf("error getting categories [domain key: %s, role key: %s, category key: %s, error: %s]", request.DomainKey, request.RoleKey, request.CategoryKey, err).ToError()
+			Errorf("error getting category pages [domain key: %s, role key: %s, resource category key: %s, error: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, err).ToError()
+		return nil, err
+	}
+
+	return pages, nil
+}
+
+func (i *Interactor) GetResourceCategoryPage(request *GetResourceCategoryPageRequest) (*Page, error) {
+	log.WithFields(map[string]interface{}{"method": "GetResourceCategoryPage"})
+	log.Infof("getting category pages [domain key: %s, role key: %s, resource category key: %s, resource page key: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey)
+	page, err := i.storage.GetResourceCategoryPage(request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey)
+	if err != nil {
+		log.WithFields(map[string]interface{}{"error": err.Error()}).
+			Errorf("error getting category pages [domain key: %s, role key: %s, resource category key: %s, resource page key: %s, error: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey, err).ToError()
+		return nil, err
+	}
+
+	return page, nil
+}
+
+func (i *Interactor) GetPageResources(request *GetPageResourcesRequest) (Resources, error) {
+	log.WithFields(map[string]interface{}{"method": "GetPageResources"})
+	log.Infof("getting resources [domain key: %s, role key: %s, resource category key: %s, resource page key: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey)
+	resources, err := i.storage.GetPageResources(request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey)
+	if err != nil {
+		log.WithFields(map[string]interface{}{"error": err.Error()}).
+			Errorf("error getting categories [domain key: %s, role key: %s, resource category key: %s, resource page key: %s, error: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey, err).ToError()
 		return nil, err
 	}
 
 	return resources, nil
 }
 
-func (i *Interactor) GetResourcesByType(request *GetResourcesByTypeRequest) (Resources, error) {
-	log.WithFields(map[string]interface{}{"method": "GetResourcesByType"})
-	log.Infof("getting resources [domain key: %s, role key: %s, category key: %s, type: %s]", request.DomainKey, request.RoleKey, request.CategoryKey, request.ResourceTypeKey)
-	resources, err := i.storage.GetResourcesByType(request.DomainKey, request.RoleKey, request.CategoryKey, request.ResourceTypeKey)
+func (i *Interactor) GetResourcesByType(request *GetPageResourcesByTypeRequest) (Resources, error) {
+	log.WithFields(map[string]interface{}{"method": "GetPageResourcesByType"})
+	log.Infof("getting resources [domain key: %s, role key: %s, category key: %s, resource page key: %s, resource type: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey, request.ResourceTypeKey)
+	resources, err := i.storage.GetPageResourcesByType(request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey, request.ResourceTypeKey)
 	if err != nil {
 		log.WithFields(map[string]interface{}{"error": err.Error()}).
-			Errorf("error getting categories [domain key: %s, role key: %s, category key: %s, type: %s, error: %s]", request.DomainKey, request.RoleKey, request.CategoryKey, request.ResourceTypeKey, err).ToError()
+			Errorf("error getting categories [domain key: %s, role key: %s, category key: %s, resource page key: %s, resource type: %s, error: %s]", request.DomainKey, request.RoleKey, request.ResourceCategoryKey, request.ResourcePageKey, request.ResourceTypeKey, err).ToError()
 		return nil, err
 	}
 

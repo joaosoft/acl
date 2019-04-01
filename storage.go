@@ -21,26 +21,26 @@ func NewStoragePostgres(config *AclConfig) (*StoragePostgres, error) {
 	}, nil
 }
 
-func (storage *StoragePostgres) GetCategories(domainKey, roleKey string) (Categories, error) {
+func (storage *StoragePostgres) GetResourceCategories(domainKey, roleKey string) (Categories, error) {
 	categories := make(Categories, 0)
 
 	_, err := storage.db.
 		Select([]interface{}{
-			"c.name",
-			"c.key",
-			"c.description",
-			"c.active",
-			"c.created_at",
-			"c.updated_at",
+			"rc.name",
+			"rc.key",
+			"rc.description",
+			"rc.active",
+			"rc.created_at",
+			"rc.updated_at",
 		}...).
-		From(dbr.As(aclTableCategory, "c")).
-		Join(dbr.As(aclTableRole, "r"), "r.id_role = c.fk_role").
+		From(dbr.As(aclTableResourceCategory, "rc")).
+		Join(dbr.As(aclTableRole, "r"), "r.id_role = rc.fk_role").
 		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = r.fk_domain").
 		Where("d.key = ?", domainKey).
 		Where("r.key = ?", roleKey).
-		Where("d.active").
 		Where("r.active").
-		Where("c.active").
+		Where("d.active").
+		Where("rc.active").
 		Load(&categories)
 
 	if err != nil {
@@ -50,14 +50,91 @@ func (storage *StoragePostgres) GetCategories(domainKey, roleKey string) (Catego
 	return categories, nil
 }
 
-func (storage *StoragePostgres) GetResources(domainKey, roleKey, categoryKey string) (Resources, error) {
+func (storage *StoragePostgres) GetResourceCategoryPages(domainKey, roleKey, resourceCategoryKey string) (Pages, error) {
+	pages := make(Pages, 0)
+
+	_, err := storage.db.
+		Select([]interface{}{
+			"rp.name",
+			"rp.key",
+			"rp.description",
+			dbr.As(storage.db.
+				Select("key").
+				From(dbr.As(aclTableResourcePage, "parent")).
+				Where("parent.id_resource_page = rp.fk_parent_resource_page"), "parent_resource_page_key"),
+			"rp.active",
+			"rp.created_at",
+			"rp.updated_at",
+		}...).
+		From(dbr.As(aclTableResourcePage, "rp")).
+		Join(dbr.As(aclTableRole, "r"), "r.id_role = rp.fk_role").
+		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = r.fk_domain").
+		Join(dbr.As(aclTableResourceCategory, "rc"), "rc.id_resource_category = rp.fk_resource_category").
+		Where("d.key = ?", domainKey).
+		Where("r.key = ?", roleKey).
+		Where("rc.key = ?", resourceCategoryKey).
+		Where(dbr.IsNull("rp.fk_parent_resource_page")).
+		Where("rp.active").
+		Where("r.active").
+		Where("d.active").
+		Where("rc.active").
+		Load(&pages)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return pages, nil
+}
+
+func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, roleKey, resourceCategoryKey, resourcePageKey string) (*Page, error) {
+	page := Page{}
+
+	_, err := storage.db.
+		Select([]interface{}{
+			"rp.name",
+			"rp.key",
+			"rp.description",
+			dbr.As(storage.db.
+				Select("key").
+				From(dbr.As(aclTableResourcePage, "parent")).
+				Where("parent.id_resource_page = rp.fk_parent_resource_page"), "parent_resource_page_key"),
+			"rp.active",
+			"rp.created_at",
+			"rp.updated_at",
+		}...).
+		From(dbr.As(aclTableResourcePage, "rp")).
+		Join(dbr.As(aclTableRole, "r"), "r.id_role = rp.fk_role").
+		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = r.fk_domain").
+		Join(dbr.As(aclTableResourceCategory, "rc"), "rc.id_resource_category = rp.fk_resource_category").
+		Where("d.key = ?", domainKey).
+		Where("r.key = ?", roleKey).
+		Where("rc.key = ?", resourceCategoryKey).
+		Where("rp.key = ?", resourcePageKey).
+		Where(dbr.IsNull("rp.fk_parent_resource_page")).
+		Where("rp.active").
+		Where("r.active").
+		Where("d.active").
+		Where("rc.active").
+		Load(&page)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &page, nil
+}
+
+func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCategoryKey, resourcePageKey string) (Resources, error) {
 	resources := make(Resources, 0)
 
 	_, err := storage.db.
 		Select([]interface{}{
 			"rs.name",
 			"rs.key",
-			dbr.As("rt.key", "type"),
+			dbr.As("rc.key", "resource_category_key"),
+			dbr.As("rp.key", "resource_page_key"),
+			dbr.As("rt.key", "resource_type_key"),
 			"rs.description",
 			"rs.active",
 			"rs.created_at",
@@ -66,12 +143,18 @@ func (storage *StoragePostgres) GetResources(domainKey, roleKey, categoryKey str
 		From(dbr.As(aclTableResource, "rs")).
 		Join(dbr.As(aclTableRole, "r"), "r.id_role = rs.fk_role").
 		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = r.fk_domain").
+		Join(dbr.As(aclTableResourcePage, "rp"), "rp.id_resource_page = rs.fk_resource_page").
+		Join(dbr.As(aclTableResourceCategory, "rc"), "rc.id_resource_category = rp.fk_resource_category").
 		Join(dbr.As(aclTableResourceType, "rt"), "rt.id_resource_type = rs.fk_resource_type").
 		Where("d.key = ?", domainKey).
 		Where("r.key = ?", roleKey).
-		Where("d.active").
-		Where("r.active").
+		Where("rp.key = ?", resourcePageKey).
 		Where("rs.active").
+		Where("r.active").
+		Where("d.active").
+		Where("rp.active").
+		Where("rc.active").
+		Where("rt.active").
 		Load(&resources)
 
 	if err != nil {
@@ -81,14 +164,16 @@ func (storage *StoragePostgres) GetResources(domainKey, roleKey, categoryKey str
 	return resources, nil
 }
 
-func (storage *StoragePostgres) GetResourcesByType(domainKey, roleKey, categoryKey, resourceTypeKey string) (Resources, error) {
+func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resourceCategoryKey, resourcePageKey, resourceTypeKey string) (Resources, error) {
 	resources := make(Resources, 0)
 
 	_, err := storage.db.
 		Select([]interface{}{
 			"rs.name",
 			"rs.key",
-			dbr.As("rt.key", "type"),
+			dbr.As("rc.key", "resource_category_key"),
+			dbr.As("rp.key", "resource_page_key"),
+			dbr.As("rt.key", "resource_type_key"),
 			"rs.description",
 			"rs.active",
 			"rs.created_at",
@@ -97,13 +182,19 @@ func (storage *StoragePostgres) GetResourcesByType(domainKey, roleKey, categoryK
 		From(dbr.As(aclTableResource, "rs")).
 		Join(dbr.As(aclTableRole, "r"), "r.id_role = rs.fk_role").
 		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = r.fk_domain").
+		Join(dbr.As(aclTableResourcePage, "rp"), "rp.id_resource_page = rs.fk_resource_page").
+		Join(dbr.As(aclTableResourceCategory, "rc"), "rc.id_resource_category = rp.fk_resource_category").
 		Join(dbr.As(aclTableResourceType, "rt"), "rt.id_resource_type = rs.fk_resource_type").
 		Where("d.key = ?", domainKey).
 		Where("r.key = ?", roleKey).
+		Where("rp.key = ?", resourcePageKey).
 		Where("rt.key = ?", resourceTypeKey).
-		Where("d.active").
-		Where("r.active").
 		Where("rs.active").
+		Where("r.active").
+		Where("d.active").
+		Where("rp.active").
+		Where("rc.active").
+		Where("rt.active").
 		Load(&resources)
 
 	if err != nil {
@@ -120,6 +211,8 @@ func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resource
 		From(dbr.As(aclTableEndpoint, "e")).
 		Join(dbr.As(aclTableEndpointResource, "er"), "er.fk_endpoint = e.id_endpoint").
 		Join(dbr.As(aclTableResource, "rs"), "rs.id_resource = er.fk_resource").
+		Join(dbr.As(aclTableResourcePage, "rp"), "rp.id_resource_page = rs.fk_resource_page").
+		Join(dbr.As(aclTableResourceCategory, "rc"), "rc.id_resource_category = rp.fk_resource_category").
 		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = e.fk_domain").
 		Join(dbr.As(aclTableRole, "r"), "r.id_role = er.fk_role").
 		Join(dbr.As(aclTableResourceType, "rt"), "rt.id_resource_type = rs.fk_resource_type").
@@ -131,6 +224,8 @@ func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resource
 		Where("e.active").
 		Where("er.active").
 		Where("rs.active").
+		Where("rc.active").
+		Where("rp.active").
 		Where("d.active").
 		Where("r.active").
 		Where("rt.active").

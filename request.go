@@ -8,9 +8,37 @@ type ErrorResponse struct {
 	Cause   string     `json:"cause,omitempty"`
 }
 
-type GetCategoriesRequest struct {
+type GetResourceCategoriesRequest struct {
 	DomainKey string `json:"domain_key" validate:"notzero"`
 	RoleKey   string `json:"role_key" validate:"notzero"`
+}
+
+type GetResourceCategoryPagesRequest struct {
+	DomainKey           string `json:"domain_key" validate:"notzero"`
+	RoleKey             string `json:"role_key" validate:"notzero"`
+	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
+}
+
+type GetResourceCategoryPageRequest struct {
+	DomainKey           string `json:"domain_key" validate:"notzero"`
+	RoleKey             string `json:"role_key" validate:"notzero"`
+	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
+	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
+}
+
+type GetPageResourcesRequest struct {
+	DomainKey           string `json:"domain_key" validate:"notzero"`
+	RoleKey             string `json:"role_key" validate:"notzero"`
+	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
+	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
+}
+
+type GetPageResourcesByTypeRequest struct {
+	DomainKey           string `json:"domain_key" validate:"notzero"`
+	RoleKey             string `json:"role_key" validate:"notzero"`
+	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
+	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
+	ResourceTypeKey     string `json:"resource_type_key" validate:"notzero"`
 }
 
 type CheckEndpointAccessRequest struct {
@@ -37,17 +65,4 @@ type CheckAclMiddleware struct {
 
 type CheckEndpointAccessResponse struct {
 	IsAllowed bool `json:"is_allowed"`
-}
-
-type GetResourcesRequest struct {
-	DomainKey   string `json:"domain_key" validate:"notzero"`
-	RoleKey     string `json:"role_key" validate:"notzero"`
-	CategoryKey string `json:"category_key" validate:"notzero"`
-}
-
-type GetResourcesByTypeRequest struct {
-	DomainKey       string `json:"domain_key" validate:"notzero"`
-	RoleKey         string `json:"role_key" validate:"notzero"`
-	CategoryKey     string `json:"category_key" validate:"notzero"`
-	ResourceTypeKey string `json:"resource_type_key" validate:"notzero"`
 }

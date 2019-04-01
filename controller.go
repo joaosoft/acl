@@ -17,8 +17,8 @@ func NewController(config *AclConfig, interactor *Interactor) *Controller {
 	}
 }
 
-func (c *Controller) GetCategoriesHandler(ctx *web.Context) error {
-	request := &GetCategoriesRequest{}
+func (c *Controller) GetResourceCategoriesHandler(ctx *web.Context) error {
+	request := &GetResourceCategoriesRequest{}
 
 	if err := ctx.Request.BindUrlParams(&request); err != nil {
 		return ctx.Response.JSON(web.StatusBadRequest, err)
@@ -28,7 +28,45 @@ func (c *Controller) GetCategoriesHandler(ctx *web.Context) error {
 		return ctx.Response.JSON(web.StatusBadRequest, errs)
 	}
 
-	response, err := c.interactor.GetCategories(request)
+	response, err := c.interactor.GetResourceCategories(request)
+	if err != nil {
+		return ctx.Response.JSON(web.StatusInternalServerError, ErrorResponse{Code: web.StatusInternalServerError, Message: err.Error()})
+	}
+
+	return ctx.Response.JSON(web.StatusOK, response)
+}
+
+func (c *Controller) GetResourceCategoryPagesHandler(ctx *web.Context) error {
+	request := &GetResourceCategoryPagesRequest{}
+
+	if err := ctx.Request.BindUrlParams(&request); err != nil {
+		return ctx.Response.JSON(web.StatusBadRequest, err)
+	}
+
+	if errs := validator.Validate(request); len(errs) > 0 {
+		return ctx.Response.JSON(web.StatusBadRequest, errs)
+	}
+
+	response, err := c.interactor.GetResourceCategoryPages(request)
+	if err != nil {
+		return ctx.Response.JSON(web.StatusInternalServerError, ErrorResponse{Code: web.StatusInternalServerError, Message: err.Error()})
+	}
+
+	return ctx.Response.JSON(web.StatusOK, response)
+}
+
+func (c *Controller) GetResourceCategoryPageHandler(ctx *web.Context) error {
+	request := &GetResourceCategoryPageRequest{}
+
+	if err := ctx.Request.BindUrlParams(&request); err != nil {
+		return ctx.Response.JSON(web.StatusBadRequest, err)
+	}
+
+	if errs := validator.Validate(request); len(errs) > 0 {
+		return ctx.Response.JSON(web.StatusBadRequest, errs)
+	}
+
+	response, err := c.interactor.GetResourceCategoryPage(request)
 	if err != nil {
 		return ctx.Response.JSON(web.StatusInternalServerError, ErrorResponse{Code: web.StatusInternalServerError, Message: err.Error()})
 	}
@@ -37,7 +75,7 @@ func (c *Controller) GetCategoriesHandler(ctx *web.Context) error {
 }
 
 func (c *Controller) GetResourcesHandler(ctx *web.Context) error {
-	request := &GetResourcesRequest{}
+	request := &GetPageResourcesRequest{}
 
 	if err := ctx.Request.BindUrlParams(&request); err != nil {
 		return ctx.Response.JSON(web.StatusBadRequest, err)
@@ -47,7 +85,7 @@ func (c *Controller) GetResourcesHandler(ctx *web.Context) error {
 		return ctx.Response.JSON(web.StatusBadRequest, errs)
 	}
 
-	response, err := c.interactor.GetResources(request)
+	response, err := c.interactor.GetPageResources(request)
 	if err != nil {
 		return ctx.Response.JSON(web.StatusInternalServerError, ErrorResponse{Code: web.StatusInternalServerError, Message: err.Error()})
 	}
@@ -56,7 +94,7 @@ func (c *Controller) GetResourcesHandler(ctx *web.Context) error {
 }
 
 func (c *Controller) GetResourcesByTypeHandler(ctx *web.Context) error {
-	request := &GetResourcesByTypeRequest{}
+	request := &GetPageResourcesByTypeRequest{}
 
 	if err := ctx.Request.BindUrlParams(&request); err != nil {
 		return ctx.Response.JSON(web.StatusBadRequest, err)
