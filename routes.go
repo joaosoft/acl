@@ -35,7 +35,8 @@ func (c *Controller) MiddlewareAcl() web.MiddlewareFunc {
 		return func(ctx *web.Context) error {
 
 			if err := c.checkAcl(ctx); err != nil {
-				return err
+				ctx.Response.Status = web.StatusForbidden
+				return nil
 			}
 
 			return next(ctx)

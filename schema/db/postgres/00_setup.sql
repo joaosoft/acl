@@ -43,6 +43,7 @@ CREATE TABLE "acl"."resource_category" (
 	"name"  		            TEXT NOT NULL,
 	"key"  		                TEXT NOT NULL,
 	description			        TEXT NOT NULL,
+	fk_parent_resource_category TEXT REFERENCES "acl"."resource_category" (id_resource_category),
 	"active"			        BOOLEAN DEFAULT TRUE NOT NULL,
 	created_at			        TIMESTAMP DEFAULT NOW(),
 	updated_at			        TIMESTAMP DEFAULT NOW(),

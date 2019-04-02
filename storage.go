@@ -29,6 +29,10 @@ func (storage *StoragePostgres) GetResourceCategories(domainKey, roleKey string)
 			"rc.name",
 			"rc.key",
 			"rc.description",
+			dbr.As(storage.db.
+				Select("key").
+				From(dbr.As(aclTableResourceCategory, "parent")).
+				Where("parent.id_resource_category = rc.fk_parent_resource_category"), "parent_resource_category_key"),
 			"rc.active",
 			"rc.created_at",
 			"rc.updated_at",

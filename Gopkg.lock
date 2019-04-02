@@ -61,7 +61,7 @@
   branch = "master"
   name = "github.com/joaosoft/dbr"
   packages = ["."]
-  revision = "86e990dc9b320251733f288b8f990522ac2a02a8"
+  revision = "7d47f9d5715c1c7bc0de26e723c0e44f83c2a9bd"
 
 [[projects]]
   branch = "master"
@@ -162,8 +162,8 @@
 [[projects]]
   name = "github.com/pelletier/go-toml"
   packages = ["."]
-  revision = "c01d1270ff3e442a8a57cddc1c92dc1138598194"
-  version = "v1.2.0"
+  revision = "63909f0a90ab0f36909e8e044e46ace10cf13ba2"
+  version = "v1.3.0"
 
 [[projects]]
   branch = "master"
@@ -207,8 +207,11 @@
 [[projects]]
   branch = "master"
   name = "github.com/streadway/amqp"
-  packages = ["."]
-  revision = "14f78b41ce6da3d698c2ef2cc8c0ea7ce9e26688"
+  packages = [
+    ".",
+    "internal/proto"
+  ]
+  revision = "16ed540749f64417a42006ad795b01c0f5d4677a"
 
 [[projects]]
   name = "github.com/valyala/bytebufferpool"
@@ -235,7 +238,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "9eb1bfa1ce65ae8a6ff3114b0aaf9a41a6cf3560"
+  revision = "baf5eb976a8cd65845293cd814ea151018552292"
 
 [[projects]]
   name = "golang.org/x/text"

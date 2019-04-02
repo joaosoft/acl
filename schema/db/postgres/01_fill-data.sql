@@ -11,9 +11,9 @@ INSERT INTO "acl"."role" (id_role, fk_domain, "name", "key", description, active
 ('2', '1', 'User', 'user', 'application user', true, '2019-03-28 20:00:47.495', '2019-03-28 20:00:47.495');
 
 -- resource_category
-INSERT INTO "acl"."resource_category" (id_resource_category, fk_role, "name", "key", description, active, created_at, updated_at) VALUES
-('1', '1', 'Home Page', 'home', 'site home page', true, '2019-03-28 20:01:23.161', '2019-03-28 20:01:23.161'),
-('2', '1', 'Settings Page', 'settings', 'site settings page', true, '2019-03-28 20:01:50.697', '2019-03-28 20:01:50.697');
+INSERT INTO "acl"."resource_category" (id_resource_category, fk_role, "name", "key", description, fk_parent_resource_category, active, created_at, updated_at) VALUES
+('1', '1', 'Home Page', 'home', 'site home page', NULL, true, '2019-03-28 20:01:23.161', '2019-03-28 20:01:23.161'),
+('2', '1', 'Settings Page', 'settings', 'site settings page', NULL, true, '2019-03-28 20:01:50.697', '2019-03-28 20:01:50.697');
 
 -- resource_page
 INSERT INTO "acl"."resource_page" (id_resource_page, fk_role, fk_resource_category, "name", "key", description, fk_parent_resource_page, active, created_at, updated_at) VALUES
