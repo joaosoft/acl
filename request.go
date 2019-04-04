@@ -10,18 +10,15 @@ type ErrorResponse struct {
 
 type GetResourceCategoriesRequest struct {
 	DomainKey string `json:"domain_key" validate:"notzero"`
-	RoleKey   string `json:"role_key" validate:"notzero"`
 }
 
 type GetResourceCategoryPagesRequest struct {
 	DomainKey           string `json:"domain_key" validate:"notzero"`
-	RoleKey             string `json:"role_key" validate:"notzero"`
 	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
 }
 
 type GetResourceCategoryPageRequest struct {
 	DomainKey           string `json:"domain_key" validate:"notzero"`
-	RoleKey             string `json:"role_key" validate:"notzero"`
 	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
 	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
 }
