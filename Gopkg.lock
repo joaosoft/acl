@@ -61,7 +61,7 @@
   branch = "master"
   name = "github.com/joaosoft/dbr"
   packages = ["."]
-  revision = "7d47f9d5715c1c7bc0de26e723c0e44f83c2a9bd"
+  revision = "fd24e009a806bb8592b6dfdee3a4ffdf9cfc47f5"
 
 [[projects]]
   branch = "master"
@@ -207,11 +207,8 @@
 [[projects]]
   branch = "master"
   name = "github.com/streadway/amqp"
-  packages = [
-    ".",
-    "internal/proto"
-  ]
-  revision = "16ed540749f64417a42006ad795b01c0f5d4677a"
+  packages = ["."]
+  revision = "75d898a42a940fbc854dfd1a4199eabdc00cf024"
 
 [[projects]]
   name = "github.com/valyala/bytebufferpool"
@@ -232,13 +229,13 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "a5d413f7728c81fb97d96a2b722368945f651e78"
+  revision = "38d8ce5564a5b71b2e3a00553993f1b9a7ae852f"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "baf5eb976a8cd65845293cd814ea151018552292"
+  revision = "81d4e9dc473e5e8c933f2aaeba2a3d81efb9aed2"
 
 [[projects]]
   name = "golang.org/x/text"

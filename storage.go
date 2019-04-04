@@ -206,7 +206,7 @@ func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resou
 func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resourceTypeKey, method, endpoint string) (isAllowed bool, err error) {
 
 	_, err = storage.db.
-		Select("count(1) > 0").
+		Select(dbr.Condition(dbr.Count("1"), dbr.ComparatorBigger, 0)).
 		From(dbr.As(aclTableEndpoint, "e")).
 		Join(dbr.As(aclTableEndpointResource, "er"), "er.fk_endpoint = e.id_endpoint").
 		Join(dbr.As(aclTableResource, "rs"), "rs.id_resource = er.fk_resource").
