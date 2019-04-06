@@ -7,16 +7,16 @@ func format(schema, table string) string {
 }
 
 var (
-	aclTableDomain                  = format(schemaAcl, "domain")
-	aclTableRole                    = format(schemaAcl, "role")
-	aclTableResourceCategory        = format(schemaAcl, "resource_category")
-	aclTableResourcePage            = format(schemaAcl, "resource_page")
-	aclTableResourceType            = format(schemaAcl, "resource_type")
-	aclTableResource                = format(schemaAcl, "resource")
-	aclTableRoleResource            = format(schemaAcl, "role_resource")
-	aclTableUserResourceRestriction = format(schemaAcl, "user_resource_restriction")
+	aclTableDomain           = format(schemaAcl, "domain")
+	aclTableRole             = format(schemaAcl, "role")
+	aclTableResourceCategory = format(schemaAcl, "resource_category")
+	aclTableResourcePage     = format(schemaAcl, "resource_page")
+	aclTableResourceType     = format(schemaAcl, "resource_type")
+	aclTableResource         = format(schemaAcl, "resource")
+	aclTableRoleResource     = format(schemaAcl, "role_resource")
+	aclTableUserResource     = format(schemaAcl, "user_resource")
 
-	aclTableEndpoint                = format(schemaAcl, "endpoint")
-	aclTableEndpointResource        = format(schemaAcl, "endpoint_resource")
-	aclTableUserEndpointRestriction = format(schemaAcl, "user_endpoint_restriction")
+	aclTableEndpoint         = format(schemaAcl, "endpoint")
+	aclTableEndpointResource = format(schemaAcl, "endpoint_resource")
+	aclTableUserEndpoint     = format(schemaAcl, "user_endpoint")
 )

@@ -41,3 +41,8 @@ type Resource struct {
 	CreatedAt           time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt           time.Time `json:"updated_at" db:"updated_at"`
 }
+
+type Allowed struct {
+	Check bool `db:"check"`
+	Allow bool `db:"allow"`
+}

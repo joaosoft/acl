@@ -10,9 +10,9 @@ import (
 
 func (c *Controller) RegisterRoutes(w manager.IWeb) error {
 	err := w.AddRoutes(
-		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/roles/:role_key/categories", c.GetResourceCategoriesHandler),
-		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/roles/:role_key/categories/:resource_category_key/pages", c.GetResourceCategoryPagesHandler),
-		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/roles/:role_key/categories/:resource_category_key/pages/:resource_page_key", c.GetResourceCategoryPageHandler),
+		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/categories", c.GetResourceCategoriesHandler),
+		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/categories/:resource_category_key/pages", c.GetResourceCategoryPagesHandler),
+		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/categories/:resource_category_key/pages/:resource_page_key", c.GetResourceCategoryPageHandler),
 		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/roles/:role_key/categories/:resource_category_key/pages/:resource_page_key/resources", c.GetResourcesHandler),
 		manager.NewRoute(string(web.MethodGet), "/api/v1/acl/domains/:domain_key/roles/:role_key/categories/:resource_category_key/pages/:resource_page_key/resources/types/:resource_type_key", c.GetResourcesByTypeHandler),
 

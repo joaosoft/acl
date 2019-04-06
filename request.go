@@ -24,18 +24,28 @@ type GetResourceCategoryPageRequest struct {
 }
 
 type GetPageResourcesRequest struct {
-	DomainKey           string `json:"domain_key" validate:"notzero"`
-	RoleKey             string `json:"role_key" validate:"notzero"`
-	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
-	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
+	UrlParams struct {
+		DomainKey           string `json:"domain_key" validate:"notzero"`
+		RoleKey             string `json:"role_key" validate:"notzero"`
+		ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
+		ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
+	}
+	Params struct {
+		User string `json:"user" validate:"notzero"`
+	}
 }
 
 type GetPageResourcesByTypeRequest struct {
-	DomainKey           string `json:"domain_key" validate:"notzero"`
-	RoleKey             string `json:"role_key" validate:"notzero"`
-	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
-	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
-	ResourceTypeKey     string `json:"resource_type_key" validate:"notzero"`
+	UrlParams struct {
+		DomainKey           string `json:"domain_key" validate:"notzero"`
+		RoleKey             string `json:"role_key" validate:"notzero"`
+		ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
+		ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
+		ResourceTypeKey     string `json:"resource_type_key" validate:"notzero"`
+	}
+	Params struct {
+		User string `json:"user" validate:"notzero"`
+	}
 }
 
 type CheckEndpointAccessRequest struct {
@@ -47,6 +57,7 @@ type CheckEndpointAccessRequest struct {
 	Params struct {
 		Method   string `json:"method" validate:"notzero"`
 		Endpoint string `json:"endpoint" validate:"notzero"`
+		User     string `json:"user" validate:"notzero"`
 	}
 }
 
@@ -57,6 +68,7 @@ type CheckAclMiddleware struct {
 		DomainKey       string `json:"domain_key" validate:"notzero"`
 		RoleKey         string `json:"role_key" validate:"notzero"`
 		ResourceTypeKey string `json:"resource_type_key" validate:"notzero"`
+		User            string `json:"user" validate:"notzero"`
 	}
 }
 

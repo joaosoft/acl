@@ -102,13 +102,14 @@ CREATE TABLE "acl"."role_resource" (
 );
 
 -- user resource restrictions
-CREATE TABLE "acl"."user_resource_restriction" (
-	id_user                     TEXT NOT NULL,
+CREATE TABLE "acl"."user_resource" (
+	fk_user                     TEXT NOT NULL,
 	fk_resource                 TEXT NOT NULL REFERENCES "acl"."resource" (id_resource),
+	"allow"			            BOOLEAN DEFAULT TRUE NOT NULL,
 	"active"			        BOOLEAN DEFAULT TRUE NOT NULL,
 	created_at			        TIMESTAMP DEFAULT NOW(),
 	updated_at			        TIMESTAMP DEFAULT NOW(),
-	UNIQUE(id_user, fk_resource)
+	UNIQUE(fk_user, fk_resource)
 );
 
 -- domain endpoints
@@ -136,13 +137,14 @@ CREATE TABLE "acl"."endpoint_resource" (
 );
 
 -- user endpoint restrictions
-CREATE TABLE "acl"."user_endpoint_restriction" (
-	id_user                     TEXT NOT NULL,
+CREATE TABLE "acl"."user_endpoint" (
+	fk_user                     TEXT NOT NULL,
 	fk_endpoint                 TEXT NOT NULL REFERENCES "acl"."endpoint" (id_endpoint),
+	"allow"			            BOOLEAN DEFAULT TRUE NOT NULL,
 	"active"			        BOOLEAN DEFAULT TRUE NOT NULL,
 	created_at			        TIMESTAMP DEFAULT NOW(),
 	updated_at			        TIMESTAMP DEFAULT NOW(),
-	UNIQUE(id_user, fk_endpoint)
+	UNIQUE(fk_user, fk_endpoint)
 );
 
 
@@ -168,11 +170,11 @@ CREATE TRIGGER trigger_acl_resource_updated_at BEFORE UPDATE
 CREATE TRIGGER trigger_acl_role_resource_updated_at BEFORE UPDATE
   ON "acl"."role_resource" FOR EACH ROW EXECUTE PROCEDURE "acl".function_updated_at();
 
-CREATE TRIGGER trigger_acl_user_endpoint_restriction_updated_at BEFORE UPDATE
-  ON "acl"."user_endpoint_restriction" FOR EACH ROW EXECUTE PROCEDURE "acl".function_updated_at();
+CREATE TRIGGER trigger_acl_user_endpoint_updated_at BEFORE UPDATE
+  ON "acl"."user_endpoint" FOR EACH ROW EXECUTE PROCEDURE "acl".function_updated_at();
 
-CREATE TRIGGER trigger_acl_user_resource_restriction_updated_at BEFORE UPDATE
-  ON "acl"."user_resource_restriction" FOR EACH ROW EXECUTE PROCEDURE "acl".function_updated_at();
+CREATE TRIGGER trigger_acl_user_resource_updated_at BEFORE UPDATE
+  ON "acl"."user_resource" FOR EACH ROW EXECUTE PROCEDURE "acl".function_updated_at();
 
 CREATE TRIGGER trigger_acl_endpoint_resource_updated_at BEFORE UPDATE
   ON "acl"."endpoint_resource" FOR EACH ROW EXECUTE PROCEDURE "acl".function_updated_at();
@@ -194,15 +196,15 @@ DROP TRIGGER trigger_acl_resource_page_updated_at ON "acl"."resource_page";
 DROP TRIGGER trigger_acl_resource_type_updated_at ON "acl"."resource_type";
 DROP TRIGGER trigger_acl_resource_updated_at ON "acl"."resource";
 DROP TRIGGER trigger_acl_role_resource_updated_at ON "acl"."role_resource";
-DROP TRIGGER trigger_acl_user_resource_restriction_updated_at ON "acl"."user_resource_restriction";
-DROP TRIGGER trigger_acl_user_endpoint_restriction_updated_at ON "acl"."user_endpoint_restriction";
+DROP TRIGGER trigger_acl_user_resource_updated_at ON "acl"."user_resource";
+DROP TRIGGER trigger_acl_user_endpoint_updated_at ON "acl"."user_endpoint";
 DROP TRIGGER trigger_acl_endpoint_updated_at ON "acl"."endpoint";
 DROP TRIGGER trigger_acl_endpoint_resource_updated_at ON "acl"."endpoint_resource";
 
 DROP TABLE "acl"."endpoint_resource";
 DROP TABLE "acl"."endpoint";
-DROP TABLE "acl"."user_endpoint_restriction";
-DROP TABLE "acl"."user_resource_restriction";
+DROP TABLE "acl"."user_endpoint";
+DROP TABLE "acl"."user_resource";
 DROP TABLE "acl"."role_resource";
 DROP TABLE "acl"."resource";
 DROP TABLE "acl"."resource_page";

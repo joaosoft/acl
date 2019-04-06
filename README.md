@@ -7,19 +7,25 @@ A simple acl implementation.
 ###### If i miss something or you have something interesting, please be part of this project. Let me know! My contact is at the end.
 
 ## With support for
-* domains
+* domain
+* role
+* resource category
+* resource page
+* resource type
+* resource
+* role resource
+* user resource
+
 * endpoint
-* roles
-* categories
-* resources
-* resource types
+* endpoint resource
+* user endpoint
 
 ## Endpoints
 * **Get categories:** 
 
     Method: GET
 
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories
+    Route: http://localhost:9001/api/v1/acl/domains/app/categories
     
     Response: 
     ```
@@ -47,7 +53,7 @@ A simple acl implementation.
 
     Method: GET
     
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/pages
+    Route: http://localhost:9001/api/v1/acl/domains/app/categories/home/pages
     
     Response: 
     ```
@@ -75,7 +81,7 @@ A simple acl implementation.
 
     Method: GET
     
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion
+    Route: http://localhost:9001/api/v1/acl/domains/app/categories/home/pages/promotion
     
     Response: 
     ```
@@ -88,12 +94,46 @@ A simple acl implementation.
         "updated_at": "2019-03-28T20:01:23.161Z"
     }
     ```
+
+* **Get page resources:** 
+
+    Method: GET
+    
+    Route: hhttp://localhost:9001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion/resources
+    
+    Response: 
+    ```
+    [
+        {
+            "name": "Read Access Home",
+            "key": "access.home.read",
+            "resource_category_key": "home",
+            "resource_page_key": "promotion",
+            "resource_type_key": "app",
+            "description": "read access to home page",
+            "active": true,
+            "created_at": "2019-03-28T20:03:29.061Z",
+            "updated_at": "2019-03-28T20:04:12.06Z"
+        },
+        {
+            "name": "Write Access Home",
+            "key": "access.home.write",
+            "resource_category_key": "home",
+            "resource_page_key": "promotion",
+            "resource_type_key": "app",
+            "description": "write access to home page",
+            "active": true,
+            "created_at": "2019-03-28T20:04:12.054Z",
+            "updated_at": "2019-03-28T20:04:12.054Z"
+        }
+    ]
+    ```    
     
 * **Get page resources of a type:** 
 
     Method: GET
     
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion/types/app
+    Route: http://localhost:9001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion/resources/types/app
     
     Response: 
     ```

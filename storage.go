@@ -86,9 +86,9 @@ func (storage *StoragePostgres) GetResourceCategoryPages(domainKey, resourceCate
 }
 
 func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, resourceCategoryKey, resourcePageKey string) (*Page, error) {
-	page := Page{}
+	var page Page
 
-	_, err := storage.db.
+	count, err := storage.db.
 		Select([]interface{}{
 			"rp.name",
 			"rp.key",
@@ -117,10 +117,14 @@ func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, resourceCateg
 		return nil, err
 	}
 
+	if count == 0 {
+		return nil, nil
+	}
+
 	return &page, nil
 }
 
-func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCategoryKey, resourcePageKey string) (Resources, error) {
+func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCategoryKey, resourcePageKey, idUser string) (Resources, error) {
 	resources := make(Resources, 0)
 
 	_, err := storage.db.
@@ -152,6 +156,15 @@ func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCat
 		Where("rp.active").
 		Where("rc.active").
 		Where("rt.active").
+		Where(dbr.NotIn("rs.id_resource",
+			storage.db.
+				Select("ur.fk_resource").
+				From(dbr.As(aclTableUserResource, "ur")).
+				Where("ur.fk_resource = rs.id_resource").
+				Where("ur.active").
+				Where("ur.fk_user = ?", idUser).
+				Where("ur.allow = ?", false),
+		)).
 		Load(&resources)
 
 	if err != nil {
@@ -161,7 +174,7 @@ func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCat
 	return resources, nil
 }
 
-func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resourceCategoryKey, resourcePageKey, resourceTypeKey string) (Resources, error) {
+func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resourceCategoryKey, resourcePageKey, resourceTypeKey, idUser string) (Resources, error) {
 	resources := make(Resources, 0)
 
 	_, err := storage.db.
@@ -194,6 +207,15 @@ func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resou
 		Where("rp.active").
 		Where("rc.active").
 		Where("rt.active").
+		Where(dbr.NotIn("rs.id_resource",
+			storage.db.
+				Select("ur.fk_resource").
+				From(dbr.As(aclTableUserResource, "ur")).
+				Where("ur.fk_resource = rs.id_resource").
+				Where("ur.active").
+				Where("ur.fk_user = ?", idUser).
+				Where("ur.allow = ?", false),
+		)).
 		Load(&resources)
 
 	if err != nil {
@@ -203,10 +225,13 @@ func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resou
 	return resources, nil
 }
 
-func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resourceTypeKey, method, endpoint string) (isAllowed bool, err error) {
+func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resourceTypeKey, method, endpoint, idUser string) (bool, error) {
 
-	_, err = storage.db.
-		Select(dbr.Condition(dbr.Count("1"), dbr.ComparatorBigger, 0)).
+	allowed := Allowed{}
+
+	// check the general resources
+	count, err := storage.db.
+		Select("e.check", dbr.As(dbr.Condition(dbr.Count("1"), dbr.ComparatorBigger, 0), "allow")).
 		From(dbr.As(aclTableEndpoint, "e")).
 		Join(dbr.As(aclTableEndpointResource, "er"), "er.fk_endpoint = e.id_endpoint").
 		Join(dbr.As(aclTableResource, "rs"), "rs.id_resource = er.fk_resource").
@@ -228,11 +253,45 @@ func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resource
 		Where("d.active").
 		Where("r.active").
 		Where("rt.active").
-		Load(&isAllowed)
+		GroupBy("e.check").
+		Load(&allowed)
 
 	if err != nil {
 		return false, err
 	}
 
-	return isAllowed, nil
+	if count == 0 {
+		return false, nil
+	}
+
+	if !allowed.Check {
+		return true, nil
+	}
+
+	// check the user if has an override to the resource
+	var userAllowed bool
+	count, err = storage.db.
+		Select("ue.allow").
+		From(dbr.As(aclTableEndpoint, "e")).
+		Join(dbr.As(aclTableEndpointResource, "er"), "er.fk_endpoint = e.id_endpoint").
+		Join(dbr.As(aclTableResource, "rs"), "rs.id_resource = er.fk_resource").
+		Join(dbr.As(aclTableUserEndpoint, "ue"), "ue.fk_endpoint = e.id_endpoint").
+		Where("e.active").
+		Where("er.active").
+		Where("rs.active").
+		Where("ue.active").
+		Where("e.method = ?", method).
+		Where("e.endpoint = ?", endpoint).
+		Where("ue.fk_user = ?", idUser).
+		Load(&userAllowed)
+
+	if err != nil {
+		return false, err
+	}
+
+	if count > 0 {
+		return userAllowed, nil
+	}
+
+	return allowed.Allow, nil
 }

@@ -61,7 +61,7 @@
   branch = "master"
   name = "github.com/joaosoft/dbr"
   packages = ["."]
-  revision = "fd24e009a806bb8592b6dfdee3a4ffdf9cfc47f5"
+  revision = "808b115c7c253a0d4e152e093f53420ce66ac82e"
 
 [[projects]]
   branch = "master"
@@ -235,7 +235,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "81d4e9dc473e5e8c933f2aaeba2a3d81efb9aed2"
+  revision = "4b34438f7a67ee5f45cc6132e2bad873a20324e9"
 
 [[projects]]
   name = "golang.org/x/text"
