@@ -1,6 +1,6 @@
 {
   "acl": {
-    "host": "localhost:9001",
+    "host": "localhost:8003",
     "token_key": "banana",
     "dbr": {
       "db": {
