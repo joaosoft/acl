@@ -85,7 +85,7 @@ func (storage *StoragePostgres) GetResourceCategoryPages(domainKey, resourceCate
 	return pages, nil
 }
 
-func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, resourceCategoryKey, resourcePageKey string) (*Page, error) {
+func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, resourcePageKey string) (*Page, error) {
 	var page Page
 
 	count, err := storage.db.
@@ -105,7 +105,6 @@ func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, resourceCateg
 		Join(dbr.As(aclTableDomain, "d"), "d.id_domain = rp.fk_domain").
 		Join(dbr.As(aclTableResourceCategory, "rc"), "rc.id_resource_category = rp.fk_resource_category").
 		Where("d.key = ?", domainKey).
-		Where("rc.key = ?", resourceCategoryKey).
 		Where("rp.key = ?", resourcePageKey).
 		Where(dbr.IsNull("rp.fk_parent_resource_page")).
 		Where("rp.active").
@@ -124,7 +123,7 @@ func (storage *StoragePostgres) GetResourceCategoryPage(domainKey, resourceCateg
 	return &page, nil
 }
 
-func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCategoryKey, resourcePageKey, idUser string) (Resources, error) {
+func (storage *StoragePostgres) GetPageResources(roleKey, resourcePageKey, idUser string) (Resources, error) {
 	resources := make(Resources, 0)
 
 	_, err := storage.db.
@@ -146,7 +145,6 @@ func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCat
 		Join(dbr.As(aclTableRoleResource, "rr"), "rr.fk_resource = rs.id_resource").
 		Join(dbr.As(aclTableRole, "r"), "r.id_role = rr.fk_role").
 		Join(dbr.As(aclTableResourceType, "rt"), "rt.id_resource_type = rs.fk_resource_type").
-		Where("d.key = ?", domainKey).
 		Where("r.key = ?", roleKey).
 		Where("rp.key = ?", resourcePageKey).
 		Where("rs.active").
@@ -174,7 +172,7 @@ func (storage *StoragePostgres) GetPageResources(domainKey, roleKey, resourceCat
 	return resources, nil
 }
 
-func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resourceCategoryKey, resourcePageKey, resourceTypeKey, idUser string) (Resources, error) {
+func (storage *StoragePostgres) GetPageResourcesByType(roleKey, resourcePageKey, resourceTypeKey, idUser string) (Resources, error) {
 	resources := make(Resources, 0)
 
 	_, err := storage.db.
@@ -196,7 +194,6 @@ func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resou
 		Join(dbr.As(aclTableRoleResource, "rr"), "rr.fk_resource = rs.id_resource").
 		Join(dbr.As(aclTableRole, "r"), "r.id_role = rr.fk_role").
 		Join(dbr.As(aclTableResourceType, "rt"), "rt.id_resource_type = rs.fk_resource_type").
-		Where("d.key = ?", domainKey).
 		Where("r.key = ?", roleKey).
 		Where("rp.key = ?", resourcePageKey).
 		Where("rt.key = ?", resourceTypeKey).
@@ -225,7 +222,7 @@ func (storage *StoragePostgres) GetPageResourcesByType(domainKey, roleKey, resou
 	return resources, nil
 }
 
-func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resourceTypeKey, method, endpoint, idUser string) (bool, error) {
+func (storage *StoragePostgres) CheckEndpointAccess(roleKey, resourceTypeKey, method, endpoint, idUser string) (bool, error) {
 
 	allowed := Allowed{}
 
@@ -242,7 +239,6 @@ func (storage *StoragePostgres) CheckEndpointAccess(domainKey, roleKey, resource
 		Join(dbr.As(aclTableResourceType, "rt"), "rt.id_resource_type = rs.fk_resource_type").
 		Where("e.method = ?", method).
 		Where("e.endpoint = ?", endpoint).
-		Where("d.key = ?", domainKey).
 		Where("r.key = ?", roleKey).
 		Where("rt.key = ?", resourceTypeKey).
 		Where("e.active").

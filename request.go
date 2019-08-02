@@ -19,15 +19,12 @@ type GetResourceCategoryPagesRequest struct {
 
 type GetResourceCategoryPageRequest struct {
 	DomainKey           string `json:"domain_key" validate:"notzero"`
-	ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
 	ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
 }
 
 type GetPageResourcesRequest struct {
 	UrlParams struct {
-		DomainKey           string `json:"domain_key" validate:"notzero"`
 		RoleKey             string `json:"role_key" validate:"notzero"`
-		ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
 		ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
 	}
 	Params struct {
@@ -37,9 +34,7 @@ type GetPageResourcesRequest struct {
 
 type GetPageResourcesByTypeRequest struct {
 	UrlParams struct {
-		DomainKey           string `json:"domain_key" validate:"notzero"`
 		RoleKey             string `json:"role_key" validate:"notzero"`
-		ResourceCategoryKey string `json:"resource_category_key" validate:"notzero"`
 		ResourcePageKey     string `json:"resource_page_key" validate:"notzero"`
 		ResourceTypeKey     string `json:"resource_type_key" validate:"notzero"`
 	}
@@ -50,7 +45,6 @@ type GetPageResourcesByTypeRequest struct {
 
 type CheckEndpointAccessRequest struct {
 	UrlParams struct {
-		DomainKey       string `json:"domain_key" validate:"notzero"`
 		RoleKey         string `json:"role_key" validate:"notzero"`
 		ResourceTypeKey string `json:"resource_type_key" validate:"notzero"`
 	}
@@ -65,7 +59,6 @@ type CheckAclMiddleware struct {
 	Method   string `json:"method" validate:"notzero"`
 	Endpoint string `json:"endpoint" validate:"notzero"`
 	Params   struct {
-		DomainKey       string `json:"domain_key" validate:"notzero"`
 		RoleKey         string `json:"role_key" validate:"notzero"`
 		ResourceTypeKey string `json:"resource_type_key" validate:"notzero"`
 		User            string `json:"user" validate:"notzero"`

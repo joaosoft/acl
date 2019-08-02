@@ -57,6 +57,9 @@ INSERT INTO "acl"."user_resource" (fk_user, fk_resource, "active", "allow", crea
 -- endpoint
 INSERT INTO "acl".endpoint (id_endpoint, fk_domain, "method", "endpoint", description, "check", "active", created_at, updated_at) VALUES
 ('1', '1', 'GET', '/api/v1/profile/sections/:section_key', 'sections endpoint', true, true, now(), now());
+INSERT INTO "acl".endpoint (id_endpoint, fk_domain, "method", "endpoint", description, "check", active, created_at, updated_at) VALUES
+('2', '1', 'GET', '/api/v1/dummy', 'dummy endpoint', true, true, '2019-03-28 20:02:45.184', '2019-03-28 20:02:45.184');
+
 
 -- endpoint_resource
 INSERT INTO "acl"."endpoint_resource" (fk_role, fk_endpoint, fk_resource, "active", created_at, updated_at) VALUES

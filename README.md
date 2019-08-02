@@ -99,7 +99,7 @@ A simple acl implementation.
 
     Method: GET
     
-    Route: hhttp://localhost:9001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion/resources
+    Route: hhttp://localhost:9001/api/v1/acl/roles/admin/categories/home/pages/promotion/resources
     
     Response: 
     ```
@@ -133,7 +133,7 @@ A simple acl implementation.
 
     Method: GET
     
-    Route: http://localhost:9001/api/v1/acl/domains/app/roles/admin/categories/home/pages/promotion/resources/types/app
+    Route: http://localhost:9001/api/v1/acl/roles/admin/pages/promotion/resources/types/app
     
     Response: 
     ```
@@ -167,7 +167,7 @@ A simple acl implementation.
 
     Method: GET
     
-    Route: http://localhost:8001/api/v1/acl/domains/app/roles/admin/resources/types/app?method=GET&endpoint=/api/v1/dummy
+    Route: http://localhost:8001/api/v1/acl/roles/admin/resources/types/app?method=GET&endpoint=/api/v1/dummy
     
     Response: 
     ```
