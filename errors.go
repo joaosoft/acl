@@ -6,6 +6,6 @@ import (
 )
 
 var (
-	ErrorGeneric         = errors.New(errors.ErrorLevel, int(web.StatusForbidden), "%s")
-	ErrorAclAccessDenied = errors.New(errors.ErrorLevel, int(web.StatusForbidden), "acl access denied")
+	ErrorGeneric         = errors.New(errors.LevelError, int(web.StatusForbidden), "%s")
+	ErrorAclAccessDenied = errors.New(errors.LevelError, int(web.StatusForbidden), "acl access denied")
 )
