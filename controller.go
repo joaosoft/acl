@@ -165,5 +165,4 @@ func (c *Controller) CheckEndpointAccessHandler(ctx *web.Context) error {
 
 func (c *Controller) DummyHandler(ctx *web.Context) error {
 	return ctx.Response.NoContent(web.StatusNoContent)
-
 }
