@@ -26,12 +26,12 @@
   version = "v1.5.0"
 
 [[projects]]
-  digest = "1:d2c84374e37085b97762b77f695101a96aea829293a6ab43915df0248a21fe9c"
+  digest = "1:517c4dd8b618aa9053dfde13c4391dff6e43f7445c2d2b394c0cb9861ba209c8"
   name = "github.com/golang/snappy"
   packages = ["."]
   pruneopts = "UT"
-  revision = "196ae77b8a26000fa30caa8b2b541e09674dbc43"
-  version = "v0.0.2"
+  revision = "674baa8c7fc30da5df3074a459494a7e6b427dff"
+  version = "v0.0.3"
 
 [[projects]]
   digest = "1:c0d19ab64b32ce9fe5cf4ddceba78d5bc9807f0016db6b1183599da3dcc24d10"
@@ -54,14 +54,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:533a7a65b79d18c3df2f370aa56be9fe6f411ebc4695b3d7af8e7c85aaadd3b0"
+  digest = "1:403c6c64bcff5cf2565d9842599973a7c1edef98f51e938d4260fb0a177f180e"
   name = "github.com/joaosoft/auth-types"
   packages = [
     "basic",
     "jwt",
   ]
   pruneopts = "UT"
-  revision = "7d19c15f4e62ec7ee3912d6fa75cffe9d2764b00"
+  revision = "9b1bbd776f4217aa97bc5f74316fffc6dd0b9c6e"
 
 [[projects]]
   branch = "master"
@@ -73,19 +73,19 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:05b08a7b3bb33ee442037dbd0d41b8f6db76bf713df5d0af08f1bc78401c0874"
+  digest = "1:f0f08640ca8ebef4cde243854048302d1b795cc665dd3a1873d692243bc965c6"
   name = "github.com/joaosoft/dbr"
   packages = ["."]
   pruneopts = "UT"
-  revision = "26a53f1654b957a71e47d807826a222ec2093d5b"
+  revision = "b881740df3f80ea52492131e481512deea3040a6"
 
 [[projects]]
   branch = "master"
-  digest = "1:16448cc34c274f3c9644f235517f28562263e7029e58c2e388652fac2e109164"
+  digest = "1:b0b8e1f9c70074785ae3c9a1a17a70fa71f1ea57ab33c8f9a533b0e2b035cf30"
   name = "github.com/joaosoft/errors"
   packages = ["."]
   pruneopts = "UT"
-  revision = "5be0a9d62458e8b47c998d0b36192a629f55786f"
+  revision = "063d59ab641c2a5e44549624c790c2d59cc1152c"
 
 [[projects]]
   branch = "master"
@@ -97,11 +97,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:104098288eba572897274628b3b2b69ed7cd617cfff0df6af4a7fffb4d2bca81"
+  digest = "1:0b4f1442a553f26421a985b988ebf3c237395c51a72e21abeb0ccf2e90e59920"
   name = "github.com/joaosoft/logger"
   packages = ["."]
   pruneopts = "UT"
-  revision = "dcb22bea7505b8cf7436555b3eef9ba9ad621c7d"
+  revision = "7f5013a1da373a321e3b763793069e7f6dd14305"
 
 [[projects]]
   branch = "master"
@@ -113,27 +113,27 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:240af061c3550a103da6442881e11f9ca2432ea2f74c7d21cb47bb70e8d976af"
+  digest = "1:1073c532423e9b1642288c574e8b6605068f16a9909fe53fcdef1045265e93ec"
   name = "github.com/joaosoft/migration"
   packages = ["services"]
   pruneopts = "UT"
-  revision = "0347456f267df3e4bf513a1c16e1985f83772978"
+  revision = "119fea143ca795fdc84951a77f8f7e288b555033"
 
 [[projects]]
   branch = "master"
-  digest = "1:30c2859ac522199f4ab1d14d7f881d00b5144650e39b411452a0685b109153c1"
+  digest = "1:0267557b05ffc846a711ba9433d592354d1b349bfe1595f28eaaef123bdd8975"
   name = "github.com/joaosoft/validator"
   packages = ["."]
   pruneopts = "UT"
-  revision = "a0401afc40205ef863bbed8dfe98b6af04580ab9"
+  revision = "7f0d9e6035073ab1953300380aee9c6f97295316"
 
 [[projects]]
   branch = "master"
-  digest = "1:445f8cd17deeb419df2528d8c26b8f1c0e2bfdf99eb2924e743aac2e00ee787e"
+  digest = "1:4edbc0db0095dff47b81869119f125e9832d650dca7bfc8f04490e4f4feb4140"
   name = "github.com/joaosoft/web"
   packages = ["."]
   pruneopts = "UT"
-  revision = "329cd986616e04760d4b9b32cde1da4752c615bc"
+  revision = "9a04c0b24f02f6ea94f39777438f2ba44fdf6ed6"
 
 [[projects]]
   branch = "master"
@@ -163,7 +163,7 @@
   version = "v0.3.0"
 
 [[projects]]
-  digest = "1:d27eedd7296593e6ea74aed67aa0d04d97305c860209b0d4996a8aa2eac7fd0b"
+  digest = "1:6ba33f676b07a9af41146dc8350a1505e3749e7363581e8f94c9e11608720a2b"
   name = "github.com/lib/pq"
   packages = [
     ".",
@@ -171,8 +171,8 @@
     "scram",
   ]
   pruneopts = "UT"
-  revision = "e7751f584844fbf92a5a18b13a0af1c855e34460"
-  version = "v1.8.0"
+  revision = "072e83d238c297c71cab11154695af301010031e"
+  version = "v1.10.0"
 
 [[projects]]
   digest = "1:85a45ff41e6b733d430b653236191d131b707a05e9751f53b469f2c0bb222f01"
@@ -199,12 +199,12 @@
   version = "v0.0.12"
 
 [[projects]]
-  digest = "1:aff0e9185b5df855488a42e064cb479e994636d3cefa47d053495123d086add4"
+  digest = "1:2a3c9556884d94bdbcdcdc62350f8cf466cf7eb39669fe7a0640f2600f61ceaf"
   name = "github.com/mitchellh/mapstructure"
   packages = ["."]
   pruneopts = "UT"
-  revision = "9e1e4717f8567d7ead72d070d064ad17d444a67e"
-  version = "v1.3.3"
+  revision = "8ebf2d61a8b4adcce25fc9fc9b76e8452a00672f"
+  version = "v1.4.1"
 
 [[projects]]
   digest = "1:a20520c30001f1d49ca07e26eafe5d8612ce5d7dac5abbdab754e14bb83c1b4e"
@@ -231,15 +231,15 @@
   revision = "b2ce2384e17bbe0c6d34077efa39dbab3e09123b"
 
 [[projects]]
-  digest = "1:5bc51628f10ee2e983badf7e302531fd87db15badfb675389450b8765cb3149f"
+  digest = "1:9892d658619bf7f315a58e16a11abfe4aa26cca56d45441e8cc2bb25d4641b89"
   name = "github.com/spf13/afero"
   packages = [
     ".",
     "mem",
   ]
   pruneopts = "UT"
-  revision = "efa411e911857ed4705ed931b474891a88f71a73"
-  version = "v1.4.1"
+  revision = "bc94f58beda5dbff6f74599fcb1f1717c5b1c111"
+  version = "v1.6.0"
 
 [[projects]]
   digest = "1:ff4cd55a3666b6ea3a876c9e133bfb54d6c812e725409a773f2c94a0b3a92f4f"
@@ -307,36 +307,36 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:9a9cf26f20c88b890e03544ed6fc8b04f59f6d618e32a4de2b4b23f61d344580"
+  digest = "1:ae44ef4ed76fc3dfc86c4078601fca3a477f16b40231951f877e19976b3129fa"
   name = "golang.org/x/crypto"
   packages = [
     "acme",
     "acme/autocert",
   ]
   pruneopts = "UT"
-  revision = "9e8e0b390897c84cad53ebe9ed2d1d331a5394d9"
+  revision = "513c2a44f67042677f472fb65720351c7332c3b8"
 
 [[projects]]
   branch = "master"
-  digest = "1:d1f7edf951b9cc444358a31de2f4e4c1c5c539ea9c6aca13f5bf92eb1124fc4b"
+  digest = "1:a5ce4fe51389593194c2d49b72bd94638816324bf48595e676d2288ddddb4336"
   name = "golang.org/x/net"
   packages = ["idna"]
   pruneopts = "UT"
-  revision = "d65d470038a546ed9bb38f15e9ad24b9a1d07f4f"
+  revision = "d523dce5a7f4b994f7ed0531dbe44cd8fd803e26"
 
 [[projects]]
   branch = "master"
-  digest = "1:cbb93d38f139851e41777eb142f9a342b50ad1d5c4e85497b667ecfd562b3d88"
+  digest = "1:9475fbbe0af85107f6dc4c19ae42d3685662197bf3c509fd92a238d2f559fbbc"
   name = "golang.org/x/sys"
   packages = [
     "internal/unsafeheader",
     "unix",
   ]
   pruneopts = "UT"
-  revision = "eeed37f84f13f52d35e095e8023ba65671ff86a1"
+  revision = "1e4c9ba3b0c4fcddbe90893331bdc829813066a1"
 
 [[projects]]
-  digest = "1:fa940333c48808b0d86ef21f412ffcfd0e5084a82f13905c028a404803b1908f"
+  digest = "1:33168e887aff0e3eae823593f38433f28928104925e54a6252937e6e3939f904"
   name = "golang.org/x/text"
   packages = [
     "collate",
@@ -357,8 +357,8 @@
     "unicode/rangetable",
   ]
   pruneopts = "UT"
-  revision = "23ae387dee1f90d29a23c0e87ee0b46038fbed0e"
-  version = "v0.3.3"
+  revision = "75a595aef632b07c6eeaaa805adb6f0f66e4130e"
+  version = "v0.3.5"
 
 [[projects]]
   digest = "1:f7059e57af5fc848220ebfbfb61e4d333179a6a07e70bc01f7ae5bc873586537"
@@ -369,12 +369,12 @@
   version = "v1.62.0"
 
 [[projects]]
-  digest = "1:d7f1bd887dc650737a421b872ca883059580e9f8314d601f88025df4f4802dce"
+  digest = "1:5054a1f394226de9e6ddc47b0ba77e35092a4112f4a1cd9cb94aba1f5bdc3ec6"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   pruneopts = "UT"
-  revision = "0b1645d91e851e735d3e23330303ce81f70adbe3"
-  version = "v2.3.0"
+  revision = "7649d4548cb53a614db133b2a8ac1f31859dda8c"
+  version = "v2.4.0"
 
 [solve-meta]
   analyzer-name = "dep"
