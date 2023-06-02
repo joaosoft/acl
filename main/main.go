@@ -1,6 +1,6 @@
 package main
 
-import "acl"
+import "github.com/joaosoft/acl"
 
 func main() {
 	m, err := acl.NewAcl()
